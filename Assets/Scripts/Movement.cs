@@ -21,18 +21,14 @@ public class Movement : MonoBehaviour
     {
         currentDirection = up;
         destination = transform.position;
-        //canMove=true;
         anim = GetComponentInChildren<Animator>();
-
-        
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-         if(canMove){
+       if(canMove){
         Move();
-      // runanim();
       }
       else
       {
@@ -44,49 +40,10 @@ public class Movement : MonoBehaviour
     nextPos = Vector3.zero;
 
     }
-/*    void runanim(){
- if(Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("d") || Input.GetKey("s"))
-         {
-         anim.SetBool("isRunning",true);
-       }
-       else
-      {
-            anim.SetBool("isRunning", false);
-            
-       }      
-     }
-    /* void OnTriggerStay(Collider other)
-    {
-       //print("colliding with: " + other.gameObject.name);
-   if(other.gameObject.tag == "wall")
-        { 
-        
-                        anim.SetBool("isRunning", false);
-                       /// canMove= false;
-                     
-                        print("jhaahhaa");
-
-        }
-    }
-    void OnTriggerExit(Collider other)
-    {
-       print("collision exit");
-               anim.SetBool("isRunning", true);
-              canMove= true;
-
-if(other.gameObject.tag == "wall")        {
-        print("collision exit, return step offset to 0.5f");
-        canMove= true;
-        anim.SetBool("isRunning", true);
-             
-        }
-    } */
     
     void Move()
     {
-       
         transform.position = Vector3.MoveTowards(transform.position, destination,speed*Time.deltaTime);
-      //  if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
       if(Input.GetKey(KeyCode.W))
         {
             nextPos = Vector3.forward;
@@ -132,28 +89,18 @@ if(other.gameObject.tag == "wall")        {
              destination = transform.position + nextPos;
              direction= nextPos;
              canMove=false;
-                         
-
-        }
-        }
-        
-    }
+                }
+            }
+         }
     }
      
        
     void OnTriggerEnter(Collider other)
     {
-       //print("colliding with: " + other.gameObject.name);
-   if(other.gameObject.tag == "enemy")
-        { 
-                   
-     UnityEngine.SceneManagement.SceneManager.LoadScene(2);
-             
-                        
-
+      if(other.gameObject.tag == "enemy")
+        {           
+        UnityEngine.SceneManagement.SceneManager.LoadScene(2);
         }
-      
- 
     }
     
     bool Valid()
@@ -162,21 +109,14 @@ if(other.gameObject.tag == "wall")        {
         RaycastHit hit;
         anim.SetBool("isRunning",false);
         Debug.DrawRay(myRay.origin, myRay.direction, Color.red);
-      
-
         if (Physics.Raycast(myRay,out hit, rayLength))
         {
                 if (hit.collider.tag == "wall")
                 {
                    anim.SetBool("isRunning", false);
-                    return false;
-                    
+                    return false;   
                 }
         }
-        return true;
-        
+        return true;  
     }
 }
-    
-    
-
